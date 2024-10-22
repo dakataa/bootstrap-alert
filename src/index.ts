@@ -40,9 +40,16 @@ type Config = {
     timeoutProgress?: boolean;
 }
 
+type Result = {
+    [action: string]: boolean;
+    isConfirmed: boolean;
+    isCancelled: boolean;
+    isDenied: boolean;
+}
+
 class Alert {
 
-    protected modalInstance: Modal | null = null;
+    protected modalInstance?: Modal;
 
     protected modalElement?: HTMLElement;
 
@@ -62,7 +69,7 @@ class Alert {
         };
     }
 
-    hide() {
+    hide(): void {
         if (!this.modalInstance) {
             return;
         }
@@ -75,7 +82,7 @@ class Alert {
         this.modalElement?.classList.add(...['close', animation].filter(v => v));
     }
 
-    show() {
+    show(): Promise<Result> {
         this.hide();
 
         return new Promise((resolve, reject) => {
@@ -85,7 +92,7 @@ class Alert {
             this.modalElement.classList.add(...['modal', 'modal-alert', this.options.animation].filter(v => v));
             this.modalElement.addEventListener('hidden.bs.modal', () => {
                 this.modalInstance?.dispose();
-                this.modalInstance = null;
+                delete this.modalInstance;
             });
 
             this.modalElement.addEventListener('animationstart', () => {
@@ -194,12 +201,15 @@ class Alert {
                     actionButtonElement.classList.add(...['btn', 'mx-2', ...(classList || ['btn-primary'])]);
                     actionButtonElement.innerHTML = label || action.toString();
                     actionButtonElement.addEventListener('click', () => {
-                        const result = {
-                            action,
-                            isConfirmed: action === 'confirm'
+                        const result: Result = {
+                            [action]: true,
+                            isConfirmed: action === 'confirm',
+                            isCancelled: action === 'cancel',
+                            isDenied: action === 'deny',
                         };
 
                         switch (action) {
+                            case 'deny':
                             case 'cancel': {
                                 reject(result)
                                 break;
@@ -217,6 +227,14 @@ class Alert {
 
             this.modalInstance.show();
         });
+    }
+
+    public get getHTMLElement(): HTMLElement | undefined {
+        return this.modalElement;
+    }
+
+    public get getBootstrapModalInstance(): Modal | undefined {
+        return this.modalInstance;
     }
 }
 

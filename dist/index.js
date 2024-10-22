@@ -3478,7 +3478,6 @@ var Size = /* @__PURE__ */ function(Size2) {
 var Alert = /*#__PURE__*/ function() {
     function Alert(options) {
         _class_call_check(this, Alert);
-        this.modalInstance = null;
         this.options = {
             title: "Are you confirm?",
             icon: Icon.success,
@@ -3532,7 +3531,7 @@ var Alert = /*#__PURE__*/ function() {
                     _this.modalElement.addEventListener("hidden.bs.modal", function() {
                         var _this_modalInstance;
                         (_this_modalInstance = _this.modalInstance) === null || _this_modalInstance === void 0 ? void 0 : _this_modalInstance.dispose();
-                        _this.modalInstance = null;
+                        delete _this.modalInstance;
                     });
                     _this.modalElement.addEventListener("animationstart", function() {
                         var _this_modalElement;
@@ -3674,10 +3673,8 @@ var Alert = /*#__PURE__*/ function() {
                             ]))));
                             actionButtonElement.innerHTML = label || action.toString();
                             actionButtonElement.addEventListener("click", function() {
-                                var result = {
-                                    action: action,
-                                    isConfirmed: action === "confirm"
-                                };
+                                var _obj;
+                                var result = (_obj = {}, _define_property(_obj, action, true), _define_property(_obj, "isConfirmed", action === "confirm"), _define_property(_obj, "isCancelled", action === "cancel"), _define_property(_obj, "isDenied", action === "deny"), _obj);
                                 switch(action){
                                     case "cancel":
                                         {
@@ -3696,6 +3693,18 @@ var Alert = /*#__PURE__*/ function() {
                     }
                     _this.modalInstance.show();
                 });
+            }
+        },
+        {
+            key: "getHTMLElement",
+            get: function get() {
+                return this.modalElement;
+            }
+        },
+        {
+            key: "getBootstrapModalInstance",
+            get: function get() {
+                return this.modalInstance;
             }
         }
     ]);

@@ -5771,13 +5771,21 @@ type Config = {
     timeout?: number;
     timeoutProgress?: boolean;
 };
+type Result = {
+    [action: string]: boolean;
+    isConfirmed: boolean;
+    isCancelled: boolean;
+    isDenied: boolean;
+};
 declare class Alert {
-    protected modalInstance: Modal | null;
+    protected modalInstance?: Modal;
     protected modalElement?: HTMLElement;
     protected options: Config;
     constructor(options?: Config);
     hide(): void;
-    show(): Promise<unknown>;
+    show(): Promise<Result>;
+    get getHTMLElement(): HTMLElement | undefined;
+    get getBootstrapModalInstance(): Modal | undefined;
 }
 
 export { Animation, Icon, Size, Alert as default };
