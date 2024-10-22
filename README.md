@@ -39,6 +39,7 @@ instance.show().then((result) => {
 | title           | Yes      | string                       | No              | Text or HTML                                                            |
 | text            | No       | string                       | null            | Text or HTML                                                            |
 | icon            | No       | Icon Enum, Promise or string | null            | Animated Lottie Icon                                                    |
+| animation       | No       | Animation Enum or string     | Animation.scale |                                                                         |
 | size            | No       | Size Enum or string          | Size.small (sm) | Popup size                                                              |
 | actions         | No       | Object ([key]: Action)       | null            | Action Buttons                                                          |
 | allowClose      | No       | Boolean                      | false           | Preventing the Popup from closing except if there is no actions defined |
