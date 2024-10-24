@@ -8,12 +8,12 @@ enum Animation {
     fade = 'fade'
 }
 
-const Icon = {
-    success: import('./assets/icons/success.json'),
-    denied: import('./assets/icons/denied.json'),
-    warning: import('./assets/icons/warning.json'),
-    info: import('./assets/icons/info.json'),
-    confirm: import('./assets/icons/info.json')
+enum Icon {
+    success,
+    denied,
+    warning,
+    info,
+    confirm
 };
 
 enum Size {
@@ -31,7 +31,7 @@ type Action = {
 type Config = {
     title: string;
     text?: string | null;
-    icon: Promise<any> | string;
+    icon: Icon | string;
     animation: Animation | string;
     size: Size | string;
     actions?: { [key: string]: Action } | null;
@@ -149,7 +149,7 @@ class Alert {
             iconElement.classList.add(...['modal-alert-icon']);
             modalBodyElement.append(iconElement);
 
-            if (this.options.icon) {
+            if (this.options.icon !== null) {
                 import('lottie-web').then(({default: lottiePlayer}) => {
 
                     const loadAnimation = (options: AnimationConfigWithPath | AnimationConfigWithData) => lottiePlayer.loadAnimation({
@@ -163,8 +163,19 @@ class Alert {
                         container: iconElement
                     });
 
-                    if (this.options.icon instanceof Promise) {
-                        this.options.icon.then((data) => loadAnimation({animationData: data} as AnimationConfigWithData));
+                    const iconMap = {
+                        [Icon.success]: 'success.json',
+                        [Icon.denied]: 'denied.json',
+                        [Icon.warning]: 'warning.json',
+                        [Icon.info]: 'info.json',
+                        [Icon.confirm]: 'success.json',
+                    };
+
+                    console.log('display', this.options.icon, iconMap);
+                    if (Object.hasOwn(iconMap, this.options.icon)) {
+                        const iconPath = iconMap[this.options.icon as Icon];
+                        console.log('iconPath', iconPath);
+                        import(`./assets/icons/${iconPath}`).then((data) => loadAnimation({animationData: data} as AnimationConfigWithData));
                     } else {
                         loadAnimation({path: this.options.icon} as AnimationConfigWithPath);
                     }

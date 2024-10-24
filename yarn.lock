@@ -786,7 +786,7 @@ sass-embedded-darwin-arm64@1.80.3:
   resolved "https://registry.npmjs.org/sass-embedded-darwin-arm64/-/sass-embedded-darwin-arm64-1.80.3.tgz"
   integrity sha512-NqJXHzZGqVOarr36X5MIv0UCQHYVhOFXGe7kDhNqMQCiNApkVydseB5TM1C2lVaiWy2JaseRD/dUNS/o2ICKXw==
 
-sass-embedded@*, sass-embedded@^1.71.1, sass-embedded@^1.80.3:
+sass-embedded@*, sass-embedded@^1.71.1:
   version "1.80.3"
   resolved "https://registry.npmjs.org/sass-embedded/-/sass-embedded-1.80.3.tgz"
   integrity sha512-aTxTl4ToSAWg7ILFgAe+kMenj+zNlwHmHK/ZNPrOM8+HTef1Q6zuxolptYLijmHdZHKSMOkWYHgo5MMN6+GIyg==
