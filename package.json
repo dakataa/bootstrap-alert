@@ -1,6 +1,6 @@
 {
 	"name": "@dakataa/bootstrap-alert",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Bootstrap Alert and Confirm popups",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
